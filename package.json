@@ -1,0 +1,12 @@
+{
+    "name": "movie-rating-api",
+    "version": "0.1.0",
+    "description": "A movie rating api that register and authenticate users, list movies, rate movies, and more.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "express": "^4.19.2"
+    }
+}
