@@ -1,16 +1,22 @@
 {
     "name": "movie-rating-api",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "description": "A movie rating api that register and authenticate users, list movies, rate movies, and more.",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
-        "start": "node index.js"
+        "start": "node src/app.js",
+        "startDev": "nodemon src/app.js"
     },
     "dependencies": {
         "bcrypt": "^5.1.1",
         "cookie-session": "^2.1.0",
         "cors": "^2.8.5",
         "express": "^4.19.2",
-        "jsonwebtoken": "^9.0.2"
+        "jsonwebtoken": "^9.0.2",
+        "postgres": "^3.4.4"
+    },
+    "devDependencies": {
+        "dotenv": "^16.4.5",
+        "nodemon": "^3.1.0"
     }
 }
