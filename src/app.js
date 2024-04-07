@@ -9,7 +9,7 @@ const app = express()
 app.use(cors())
 
 const apiRoutes = require('./api')
-router.use('/api', apiRoutes)
+app.use('/api', apiRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server up and running on port ${process.env.PORT}`)

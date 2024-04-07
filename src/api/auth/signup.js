@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 
 const router = express.Router()
 
+router.use(express.json())
+
 const Client = require('../../database_connection')
 
 const insertIntoDB = async (username, password) => {
@@ -12,9 +14,9 @@ const insertIntoDB = async (username, password) => {
 }
 
 router.post('/', async (req, res) => {
-    console.log("start")
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(req.body.password, salt)
         const username = req.body.username
 
         try {
@@ -22,13 +24,12 @@ router.post('/', async (req, res) => {
             res.status(200).json({ message: "Sign up process is Successful" })
         } 
         catch(err) {
-            return res.status(400).json({"message": "Internal server error"})
+            return res.status(500).json({"message": "Internal server error"})
         }
     }
     catch (err) {
-        return res.status(400).json({"message": "Internal server error"})
+        return res.status(500).json({"message": "Internal server error"})
     }
-    console.log("finish")
 })
 
 
