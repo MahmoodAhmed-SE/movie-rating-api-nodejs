@@ -1,43 +1,47 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
-const Client = require('../../database_connection')
-
 
 const router = express.Router()
 router.use(express.json())
 
-const retrieveUsernameAndPassword = async (username) => {
-    const result = await Client`
-        SELECT username, password FROM Users
-        WHERE username = ${username};
-    `
-    if (result.length == 0) return {username: undefined, password: undefined} // no data found
-    return result[0];
-}
+
+const UserServices = require('../../services/user_services')
+
+const { DBClient } = { DBConfiguration } = require('../../config')
+const userService = new UserServices(DBClient) 
+
 
 
 router.post('/', async (req, res) => {
     try {
-        const { username, password } = await retrieveUsernameAndPassword(req.body.username)
+        // TO-DO: validate req.body inputs
         
-        if (!username)  {
+        const username = req.body.username
+        
+        const user = userServices.findUser(usernameToLookUp)
+        
+        if (user.length == 0)  {
             return res.status(300).json({message: "Username and password are incorrect"})
         }
 
         
         try {
-            const isAuthenticated = await bcrypt.compare(req.body.password, password)
+            const isAuthenticated = await bcrypt.compare(req.body.password, user[0].hashed_password)
     
             if (!isAuthenticated) {
                 return res.status(300).json({message: "username and password are incorrect"})
             }
             
             res.status(200).json({ message: "Authenticated successfully" })  
+            
+            // store session for authorization
+
         }
         catch (err) {
-            res.status(400).json({ message: "Internal Server Error" })
+            return res.status(400).json({ message: "Internal Server Error" })
         }
         
+
     } 
     catch (err) {
         return res.status(500).json({message: "Internal Server Error"})
