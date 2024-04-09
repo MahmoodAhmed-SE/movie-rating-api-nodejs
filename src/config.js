@@ -7,7 +7,7 @@ const config = {
         DBName: process.env.DBName, 
         DBUser: process.env.DBUser, 
         DBPassword: process.env.DBPassword,
-        DBClient: null,
+        sequelize: null,
     }
 
 }

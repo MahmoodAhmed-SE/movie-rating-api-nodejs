@@ -2,23 +2,20 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 
 const router = express.Router()
+
+
+const { findUser } = require('../../services/user_services')
+
+router.use(express.urlencoded({ extended: true }))
 router.use(express.json())
-
-
-const UserServices = require('../../services/user_services')
-
-const { DBClient } = { DBConfiguration } = require('../../config')
-const userService = new UserServices(DBClient) 
-
-
 
 router.post('/', async (req, res) => {
     try {
         // TO-DO: validate req.body inputs
         
-        const username = req.body.username
+        const usernameToLookUp = req.body.username
         
-        const user = userServices.findUser(usernameToLookUp)
+        const user = await findUser(usernameToLookUp)
         
         if (user.length == 0)  {
             return res.status(300).json({message: "Username and password are incorrect"})

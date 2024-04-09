@@ -1,43 +1,41 @@
-const Models = require('../models/sequelize')
-
-class UserService {
-    constructor (sequelize) {
-        Models(sequelize)
-        this.client = sequelize
-        this.models = sequelize.models
-    }
+const User = require('../models/sequelize/user_model')
 
 
-    createUser = async ({username, hashedPassword}) => {
-        try {
-            const user = await this.models.USERS.create({
-                username,
-                hashedPassword
-            })
 
-            return user
-        } 
-        catch (err) {
-            return err
-        }
-    }
-
-
-    findUser = async (usernameToLookUp) => {
-        try {            
-            const users = await this.models.USERS.findAll({
-                attributes: ['username', 'hashed_password'],
-                where: {
-                    username: usernameToLookUp
-                }
-            })
-
-            return users
-        }
-        catch(err) {
-            return err
-        }
+const createUser = async ({ username, hashed_password }) => {
+    try {
+        const user = await User.create({
+            username,
+            hashed_password
+        })
+        
+        return user
+    } 
+    catch (err) {
+        console.error("User creation error:", err.message)
+        return err
     }
 }
 
-module.exports = UserService
+
+const findUser = async (usernameToLookUp) => {
+    try {
+        const users = await User.findAll({
+            where: {
+                username: usernameToLookUp
+            }
+        })
+        console.log(users.length)
+        return users
+    }
+    catch(err) {
+        console.error('Finding all users error:', err.message)
+        return err
+    }
+}
+
+
+module.exports = {
+    createUser, 
+    findUser
+}

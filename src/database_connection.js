@@ -17,7 +17,7 @@ const connectToDatabase = () => {
     const sequelize = new Sequelize(DBConfiguration.DBName, DBConfiguration.DBUser, DBConfiguration.DBPassword, {
         host: DBConfiguration.host,
         port: DBConfiguration.port,
-        dialect: 'postgres',
+        dialect: 'postgres'
     });
 
     authenticateDBConnection(sequelize)

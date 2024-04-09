@@ -1,10 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 
-const Client = require('./database_connection')()
+const sequelize = require('./database_connection')()
 
 const { DBConfiguration } = require('./config')
-DBConfiguration.DBClient = Client
+DBConfiguration.sequelize = sequelize
 
 require('dotenv').config()
 

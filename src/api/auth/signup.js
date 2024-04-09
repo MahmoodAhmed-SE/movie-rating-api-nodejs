@@ -4,17 +4,17 @@ const bcrypt = require('bcrypt')
 const router = express.Router()
 
 
-const UserServices = require('../../services/user_services')
-
-const { DBClient } = { DBConfiguration } = require('../../config')
-const userServices = new UserServices(DBClient)
+const { findUser, createUser } = require('../../services/user_services')
 
 
-const isUserRegistered = (usernameToLookUp) => {
-    const user = userServices.findUser(usernameToLookUp)
-    if (user.length == 1) return true
-    else return false 
+const isUserRegistered = async (usernameToLookUp) => {
+    const user = await findUser(usernameToLookUp)
+    if (user.length == 0) return false
+    else return true 
 }
+
+router.use(express.urlencoded({ extended: true }))
+router.use(express.json())
 
 // route: /api/auth/signup
 router.post('/', async (req, res) => {
@@ -23,28 +23,30 @@ router.post('/', async (req, res) => {
         // Security TO-DO: validate input req.body
 
         const username = req.body.username
-        if (!isUserRegistered(username)) {
+        if (await isUserRegistered(username)) {
             return res.status(300).json({ message: "Username is already taken" })
         }
         
 
         const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
+        const hashed_password = await bcrypt.hash(req.body.password, salt)
         
         
 
         try {
-            await userServices.createUser({username, hashedPassword})
-            res.status(200).json({ message: "Sign up process is Successful" })
+            await createUser({username, hashed_password})
+            return res.status(200).json({ message: "Sign up process is Successful" })
 
             // TO-DO: authorize by storing session
         } 
         catch(err) {
+            console.error("User creation error:", err.message)
             // TO-DO: deal with database problem
             return res.status(500).json({"message": "Internal server error"})
         }
     }
     catch (err) {
+        console.error("Encryption error:", err.message)
         // TO-DO: deal with password hashing problem
         return res.status(500).json({"message": "Internal server error"})
     }
