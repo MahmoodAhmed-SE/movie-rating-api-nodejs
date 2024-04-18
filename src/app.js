@@ -1,24 +1,30 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const expressListEndpoints = require('express-list-endpoints');
 
-const sequelize = require('./database_connection')()
+const cors = require('cors');
 
-const { DBConfiguration } = require('./config')
-DBConfiguration.sequelize = sequelize
+const sequelize = require('./database_connection')();
 
-require('dotenv').config()
+const { ServerConfiguration, DBConfiguration } = require('./config');
+DBConfiguration.sequelize = sequelize;
 
-const app = express()
+require('dotenv').config();
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-app.use(cors())
+const app = express();
 
-const apiRoutes = require('./api')
-app.use('/api', apiRoutes)
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
 
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server up and running on port ${process.env.PORT}`)
+
+const apiRoutes = require('./api');
+
+app.use('/api', apiRoutes);
+
+
+console.log(expressListEndpoints(app), '\n\n')
+
+app.listen(ServerConfiguration.port, () => {
+    console.log(`Server up and running on port ${ServerConfiguration.port}`, "\n\n");
 })

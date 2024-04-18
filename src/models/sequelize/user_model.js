@@ -22,6 +22,7 @@ User.init(
         modelName: 'User',
         createdAt: false,
         updatedAt: false,
+        
     }
 )
 

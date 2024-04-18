@@ -1,6 +1,6 @@
 {
     "name": "movie-rating-api",
-    "version": "0.4.2",
+    "version": "0.5.0",
     "description": "A movie rating api that register and authenticate users, list movies, rate movies, and more.",
     "main": "app.js",
     "scripts": {
@@ -19,6 +19,7 @@
     },
     "devDependencies": {
         "dotenv": "^16.4.5",
+        "express-list-endpoints": "^7.1.0",
         "nodemon": "^3.1.0"
     }
 }

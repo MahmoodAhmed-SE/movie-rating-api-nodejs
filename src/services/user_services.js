@@ -25,7 +25,7 @@ const findUser = async (usernameToLookUp) => {
                 username: usernameToLookUp
             }
         })
-        console.log(users.length)
+
         return users
     }
     catch(err) {
