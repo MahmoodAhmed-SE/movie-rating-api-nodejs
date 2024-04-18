@@ -3,10 +3,16 @@ const expressListEndpoints = require('express-list-endpoints');
 
 const cors = require('cors');
 
+// Connecting db and returning [sequelize] db client.
 const sequelize = require('./database_connection')();
 
+// Setting [sequelize] db client in config.js for global usage
 const { ServerConfiguration, DBConfiguration } = require('./config');
 DBConfiguration.sequelize = sequelize;
+
+// Inserting local movies data from movies.json file into the database on app start. 
+const { addLocalMoviesToDB } = require('./database_app_startup_insertions/add_local_movies');
+addLocalMoviesToDB();
 
 require('dotenv').config();
 

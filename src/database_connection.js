@@ -13,6 +13,7 @@ const authenticateDBConnection = async (sequelize) => {
 
 const { DBConfiguration } = require('./config')
 
+
 const connectToDatabase = () => {
     const sequelize = new Sequelize(DBConfiguration.DBName, DBConfiguration.DBUser, DBConfiguration.DBPassword, {
         host: DBConfiguration.host,
@@ -20,7 +21,7 @@ const connectToDatabase = () => {
         dialect: 'postgres'
     });
 
-    authenticateDBConnection(sequelize)
+    authenticateDBConnection(sequelize);
 
     return sequelize;
 }
