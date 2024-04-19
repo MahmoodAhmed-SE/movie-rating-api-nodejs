@@ -31,7 +31,7 @@ const addLocalMoviesToDB = () => {
             console.info("Movies List Added Missing Properties! instance:", movies_list[0])
 
             // Adding modified movies list using [Movie.createBulk] function into the Movies table
-            addListOfMovies(movies_list);
+            await addListOfMovies(movies_list);
             console.info("Movies List Inserted into the DB!")
         }
         catch (err) {
@@ -45,12 +45,15 @@ const addMissingMovieProperties = async (movie) => {
     try {
         const apiResponse = await fetch(`https://cinema.stag.rihal.tech/api/movie/${movie.id}`);
         const { release_date, main_cast, director, budget } = await apiResponse.json(apiResponse);
+        
+        // Extracting date data to convert it from dd-mm-yyyy to yyyy-mm-dd to align with the database definition 
+        const [day, month, year] = release_date.split('-');
 
         movie = {
             id: movie.id,
             name: movie.name,
             description: movie.description,
-            release_date,
+            release_date: `${year}-${month}-${day}`,
             main_cast,
             director,
             budget

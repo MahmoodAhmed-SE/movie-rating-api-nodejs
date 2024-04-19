@@ -11,8 +11,19 @@ const addListOfMovies = async (movies_list) => {
 }
 
 
+const getAllMovies = async () => {
+    try {
+        const movies = await Movie.findAll();
+        return movies;
+    } catch (err) {
+        console.error('error')
+    }
+}
+
+
 
 
 module.exports = {
-    addListOfMovies
+    addListOfMovies,
+    getAllMovies
 }

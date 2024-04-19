@@ -27,7 +27,7 @@ User.init(
 )
 
 
-User.sync()
+User.sync({ force: true })
     .then((r) => console.log("Users table has been created successfully!",))
     .catch((err) => console.error("Error in creating Users table:", err))
 

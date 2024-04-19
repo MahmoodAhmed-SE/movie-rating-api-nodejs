@@ -7,8 +7,7 @@ class Movie extends Model { }
 Movie.init(
     {
         id: {
-            type: DataTypes.NUMBER,
-            // defaultValue: DataTypes.UUIDV1,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
@@ -19,6 +18,30 @@ Movie.init(
         description: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        release_date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            validate: {
+                isDate: true,
+                isCorrectDateFormat(value) {
+                    // Check if the value matches the 'yyyy-mm-dd' format
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                        throw new Error('Date must be in the format yyyy-mm-dd');
+                    }
+                },
+            },
+        },
+        main_cast: {
+            type: DataTypes.ARRAY(DataTypes.TEXT),
+            allowNull: false
+        },
+        director: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        budget: {
+            type: DataTypes.DOUBLE(undefined, 2)
         }
     }, {
     sequelize: DBConfiguration.sequelize,
@@ -32,7 +55,7 @@ Movie.init(
 (
     async () => {
         try {
-            await Movie.sync();
+            await Movie.sync({ force: true });
             console.log("Movies Table has been created successfully!");
         }
         catch (err) {
