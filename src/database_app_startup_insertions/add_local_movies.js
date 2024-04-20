@@ -46,14 +46,30 @@ const addMissingMovieProperties = async (movie) => {
         const apiResponse = await fetch(`https://cinema.stag.rihal.tech/api/movie/${movie.id}`);
         const { release_date, main_cast, director, budget } = await apiResponse.json(apiResponse);
         
+
+        // if api returns empty info about a moive
+        if (release_date.length != 12 && release_date.length == 0 && director.length == 0 &&  budget == 0) {
+            movie = {
+                id: movie.id,
+                name: movie.name,
+                description: movie.description,
+                release_date: null,
+                main_cast: null,
+                director: null,
+                budget: null
+            }
+            return movie;                
+        }
+
         // Extracting date data to convert it from dd-mm-yyyy to yyyy-mm-dd to align with the database definition 
         const [day, month, year] = release_date.split('-');
+        const release_date_proper_format = new Date(`${year}-${month}-${day}`).toISOString().split('T')[0];
 
         movie = {
             id: movie.id,
             name: movie.name,
             description: movie.description,
-            release_date: `${year}-${month}-${day}`,
+            release_date: release_date_proper_format,
             main_cast,
             director,
             budget
