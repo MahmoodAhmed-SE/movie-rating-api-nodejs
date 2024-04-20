@@ -1,7 +1,7 @@
-const { DataTypes, Model } = require('sequelize')
-const { DBConfiguration } = require('../../config')
+const { DataTypes, Model } = require('sequelize');
+const { DBConfiguration } = require('../../config');
 
-const { sequelize } = DBConfiguration
+const { sequelize } = DBConfiguration;
 
 class User extends Model { }
 
@@ -24,12 +24,20 @@ User.init(
         updatedAt: false,
 
     }
-)
+);
 
 
-User.sync({ force: true })
-    .then((r) => console.log("Users table has been created successfully!",))
-    .catch((err) => console.error("Error in creating Users table:", err))
+(
+    async () => {
+        try {
+            await User.sync({ force: true });
+            console.log("Users table has been created successfully!");
+        }
+        catch (err) {
+            console.error("Users Table creation error:", err);
+        }
+    }
+)();
 
 
-module.exports = User
+module.exports = User;

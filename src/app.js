@@ -29,7 +29,7 @@ const apiRoutes = require('./api');
 app.use('/api', apiRoutes);
 
 
-console.log(expressListEndpoints(app), '\n\n')
+console.log(expressListEndpoints(app), '\n\n');
 
 app.listen(ServerConfiguration.port, () => {
     console.log(`Server up and running on port ${ServerConfiguration.port}`, "\n\n");

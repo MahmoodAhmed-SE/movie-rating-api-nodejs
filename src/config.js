@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const config = {
     ServerConfiguration: {
@@ -13,7 +13,6 @@ const config = {
         DBPassword: process.env.DB_PASSWORD,
         sequelize: null,
     }
-
 }
 
-module.exports = config
+module.exports = config;

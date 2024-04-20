@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize')
 
 
-
 const authenticateDBConnection = async (sequelize) => {
     try {
         await sequelize.authenticate();
@@ -9,7 +8,7 @@ const authenticateDBConnection = async (sequelize) => {
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
-} 
+}
 
 const { DBConfiguration } = require('./config')
 
@@ -18,7 +17,8 @@ const connectToDatabase = () => {
     const sequelize = new Sequelize(DBConfiguration.DBName, DBConfiguration.DBUser, DBConfiguration.DBPassword, {
         host: DBConfiguration.host,
         port: DBConfiguration.port,
-        dialect: 'postgres'
+        dialect: 'postgres',
+        logging: false,
     });
 
     authenticateDBConnection(sequelize);

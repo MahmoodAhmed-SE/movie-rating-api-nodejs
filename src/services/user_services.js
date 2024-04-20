@@ -1,4 +1,4 @@
-const User = require('../models/sequelize/user_model')
+const User = require('../models/sequelize/user_model');
 
 
 
@@ -7,13 +7,13 @@ const createUser = async ({ username, hashed_password }) => {
         const user = await User.create({
             username,
             hashed_password
-        })
-        
-        return user
-    } 
+        });
+
+        return user;
+    }
     catch (err) {
-        console.error("User creation error:", err.message)
-        return err
+        console.error("User creation error:", err.message);
+        return err;
     }
 }
 
@@ -24,18 +24,18 @@ const findUser = async (usernameToLookUp) => {
             where: {
                 username: usernameToLookUp
             }
-        })
+        });
 
-        return users
+        return users;
     }
-    catch(err) {
-        console.error('Finding all users error:', err.message)
-        return err
+    catch (err) {
+        console.error('Finding all users error:', err.message);
+        return err;
     }
 }
 
 
 module.exports = {
-    createUser, 
+    createUser,
     findUser
 }

@@ -6,7 +6,7 @@ const addListOfMovies = async (movies_list) => {
         await Movie.bulkCreate(movies_list);
     }
     catch (err) {
-        console.error(`Error bulk create movies_list in the movies table: \n sample: ${movies_list[0].release_date}\n:`, err)
+        console.error(`Error bulk create movies_list in the Movies table: \nSample: ${movies_list[0].release_date}\n:`, err);
     }
 }
 
@@ -16,7 +16,7 @@ const getAllMovies = async () => {
         const movies = await Movie.findAll();
         return movies;
     } catch (err) {
-        console.error('error')
+        console.error('Finding all movies error:', err);
     }
 }
 

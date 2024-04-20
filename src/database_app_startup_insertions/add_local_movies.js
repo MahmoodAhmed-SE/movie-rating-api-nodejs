@@ -15,7 +15,7 @@ const addLocalMoviesToDB = () => {
             const movies_list = await JSON.parse(movies_json);
 
 
-            console.info("Movies List Parsed!")
+            console.info("Movies List Parsed!");
 
             /* Adding missing pieces of information for each movie object
             namely: 
@@ -45,10 +45,10 @@ const addMissingMovieProperties = async (movie) => {
     try {
         const apiResponse = await fetch(`https://cinema.stag.rihal.tech/api/movie/${movie.id}`);
         const { release_date, main_cast, director, budget } = await apiResponse.json(apiResponse);
-        
+
 
         // if api returns empty info about a moive
-        if (release_date.length != 12 && release_date.length == 0 && director.length == 0 &&  budget == 0) {
+        if (release_date.length != 12 && release_date.length == 0 && director.length == 0 && budget == 0) {
             movie = {
                 id: movie.id,
                 name: movie.name,
@@ -58,7 +58,7 @@ const addMissingMovieProperties = async (movie) => {
                 director: null,
                 budget: null
             }
-            return movie;                
+            return movie;
         }
 
         // Extracting date data to convert it from dd-mm-yyyy to yyyy-mm-dd to align with the database definition 

@@ -36,8 +36,7 @@ Movie.init(
     modelName: 'Movie',
     updatedAt: false,
     createdAt: false
-}
-);
+});
 
 
 (
