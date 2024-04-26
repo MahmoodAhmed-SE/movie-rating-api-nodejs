@@ -1,4 +1,4 @@
-const { Movie } = require('../models/sequelize');
+const { Movie, MovieRating } = require('../models/sequelize');
 
 
 const addListOfMovies = async (movies_list) => {
@@ -20,10 +20,21 @@ const getAllMovies = async () => {
     }
 }
 
-
+const getRatingsOfMovie = async (movieId) => {
+    try {
+        return await MovieRating.findAll({
+            where: {
+                MovieId: movieId
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 
 module.exports = {
     addListOfMovies,
-    getAllMovies
+    getAllMovies,
+    getRatingsOfMovie
 }

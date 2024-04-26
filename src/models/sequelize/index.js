@@ -19,7 +19,7 @@ MovieRating.belongsTo(Movie);
 (
     async () => {
         try {
-            await DBConfiguration.sequelize.sync({ force: true });
+            await DBConfiguration.sequelize.sync();
             console.log("Users table has been created successfully!");
         }
         catch (err) {
