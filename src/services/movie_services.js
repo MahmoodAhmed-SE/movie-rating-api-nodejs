@@ -1,4 +1,4 @@
-const Movie = require('../models/sequelize/movie_model');
+const { Movie } = require('../models/sequelize');
 
 
 const addListOfMovies = async (movies_list) => {

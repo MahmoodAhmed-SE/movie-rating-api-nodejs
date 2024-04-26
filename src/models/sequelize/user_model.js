@@ -20,24 +20,8 @@ User.init(
     {
         sequelize,
         modelName: 'User',
-        createdAt: false,
-        updatedAt: false,
-
     }
 );
-
-
-(
-    async () => {
-        try {
-            await User.sync({ force: true });
-            console.log("Users table has been created successfully!");
-        }
-        catch (err) {
-            console.error("Users Table creation error:", err);
-        }
-    }
-)();
 
 
 module.exports = User;

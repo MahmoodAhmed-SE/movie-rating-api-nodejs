@@ -8,6 +8,7 @@ const { authorizationJWT } = require('../middlewares/auth');
 const authRoutes = require('./auth');
 const moviesRoutes = require('./movies');
 
+
 router.use('/auth', authRoutes);
 router.use('/movies', authorizationJWT, moviesRoutes);
 

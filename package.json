@@ -1,6 +1,6 @@
 {
     "name": "movie-rating-api",
-    "version": "0.6.2",
+    "version": "0.7.0",
     "description": "A movie rating api that register and authenticate users, list movies, rate movies, and more.",
     "main": "app.js",
     "scripts": {

@@ -1,8 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const JWT = require('jsonwebtoken');
 
 const router = express.Router();
 
+require('dotenv').config();
 
 const { findUser, createUser } = require('../../services/user_services');
 
@@ -38,10 +40,8 @@ router.post('/', async (req, res) => {
 
 
         try {
-            await createUser({ username, hashed_password });
-            return res.status(200).json({ message: "Sign up process is Successful" });
-
-            // TO-DO: authorize by storing session
+            const user = await createUser({ username, hashed_password });
+            signJWT(res, { id: user.dataValues.id });
         }
         catch (err) {
             console.error("User creation error:", err.message);
@@ -55,6 +55,22 @@ router.post('/', async (req, res) => {
         return res.status(500).json({ "message": "Internal server error" });
     }
 });
+
+
+const signJWT = (res, payload) => {
+    return JWT.sign(payload, process.env.JWT_SECRET_KEY, (err, token) => {
+        if (err) {
+            // TO-DO: handle tokenization error
+            console.log("siging jwt error:", err);
+        }
+        else {
+            res.status(200).json({
+                message: "Sign up process is Successfull and user authenticated successfully!",
+                token
+            });
+        }
+    });
+}
 
 
 module.exports = router;

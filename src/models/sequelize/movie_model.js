@@ -34,22 +34,7 @@ Movie.init(
     }, {
     sequelize: DBConfiguration.sequelize,
     modelName: 'Movie',
-    updatedAt: false,
-    createdAt: false
 });
-
-
-(
-    async () => {
-        try {
-            await Movie.sync({ force: true });
-            console.log("Movies Table has been created successfully!");
-        }
-        catch (err) {
-            console.error("Movies Table creation error:", err);
-        }
-    }
-)();
 
 
 module.exports = Movie;
