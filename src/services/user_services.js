@@ -60,8 +60,34 @@ const rateMovie = async (UserId, MovieId, rating) => {
 }
 
 
+const getMyRating = async (id) => {
+    try {
+        return await MovieRating.findOne({
+            where: {
+                UserId: id
+            }
+        });
+    }
+    catch (err) {
+        console.error('Finding all ratings based on user id error:', err.message);
+        return err;
+    }
+}
+
+const getRatingsOfUsers = async () => {
+    try {
+        return await MovieRating.findAll();
+    }
+    catch (err) {
+        console.error('Finding all ratings:', err.message);
+        return err;
+    }
+}
+
 module.exports = {
     createUser,
     findUser,
-    rateMovie
+    rateMovie,
+    getMyRating,
+    getRatingsOfUsers
 }

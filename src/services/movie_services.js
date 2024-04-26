@@ -20,6 +20,15 @@ const getAllMovies = async () => {
     }
 }
 
+const getMovieWithPk = async (id) => {
+    try {
+        const movie = await Movie.findByPk(id);
+        return movie;
+    } catch (err) {
+        console.error('Finding movie error:', err);
+    }
+}
+
 const getRatingsOfMovie = async (movieId) => {
     try {
         return await MovieRating.findAll({
@@ -36,5 +45,6 @@ const getRatingsOfMovie = async (movieId) => {
 module.exports = {
     addListOfMovies,
     getAllMovies,
+    getMovieWithPk,
     getRatingsOfMovie
 }
