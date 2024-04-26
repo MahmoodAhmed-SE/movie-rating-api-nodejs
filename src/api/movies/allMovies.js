@@ -14,10 +14,23 @@ router.get('/', async (req, res) => {
 
 
 /* [getAvgRating] is used to add the average rating of each 
-movie to the movies list of movie objects. */
+movie to the movies list of movie objects. As well as, limit the descritpion to 100 chars*/
 const getAvgRating = async (movies) => {
     for (const movie of movies) {
-        
+
+        /* if the movie description is more 100 chars, check where the last space (' ') before 100 chars is at 
+        (this is to ensure we don't truncate a full meaningful word) and truncate it with ' ...' 
+        */
+        if (movie.description.length > 100) {
+            for (let i = 99; i > 0; --i) {
+                if (movie.description[i] === ' ') {
+                    movie.description = movie.description.slice(0, i) + ' ...';
+                    console.log(movie.description);
+                    break;
+                }
+            }
+        }
+
         // get the ratings of [movie] with given id 
         const ratingsList = await getRatingsOfMovie(movie.id);
 
