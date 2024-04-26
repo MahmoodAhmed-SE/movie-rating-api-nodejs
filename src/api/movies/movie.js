@@ -22,6 +22,12 @@ router.get('/:movie_id', async (req, res) => {
 
     processMovieBudgetToEngInfo(movie);
 
+    /*
+    TO-DO: 
+    - [ ] change [processMyRating] to only fetch the rating of given [movie_id] with given [userId]
+    - [ ] change [processAverageRating] to only fetch the average ratings of given [movie_id] of all users 
+    */
+
     await processMyRating(req.body.id.id, movie);
 
     await processAverageRating(movie);
