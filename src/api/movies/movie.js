@@ -4,7 +4,7 @@ const ntow = require('number-to-words');
 
 
 const { getMovieWithPk } = require('../../services/movie_services');
-const { getMyRating, getRatingsOfUsers } = require('../../services/user_services');
+const { getMyRating, getRatingsOfUsersOnMovie } = require('../../services/user_services');
 
 router.get('/:movie_id', async (req, res) => {
     const { movie_id } = req.params;
@@ -22,11 +22,6 @@ router.get('/:movie_id', async (req, res) => {
 
     processMovieBudgetToEngInfo(movie);
 
-    /*
-    TO-DO: 
-    - [ ] change [processMyRating] to only fetch the rating of given [movie_id] with given [userId]
-    - [ ] change [processAverageRating] to only fetch the average ratings of given [movie_id] of all users 
-    */
 
     await processMyRating(req.body.id.id, movie);
 
@@ -42,9 +37,9 @@ const processMovieBudgetToEngInfo = (movie) => {
     movie.dataValues.budget_en = ntow.toWords(movie.dataValues.budget);
 }
 
-const processMyRating = async (id, movie) => {
+const processMyRating = async (userId, movie) => {
     try {
-        const my_rating = await getMyRating(id);
+        const my_rating = await getMyRating(userId, movie.dataValues.id);
         movie.dataValues.my_rating = my_rating.dataValues.rating;
     }
     catch (err) {
@@ -52,15 +47,15 @@ const processMyRating = async (id, movie) => {
     } 
 }
 
-const processAverageRating = async ( movie) => {
+const processAverageRating = async (movie) => {
     try {
-        const ratings = await getRatingsOfUsers();
+        const ratings = await getRatingsOfUsersOnMovie(movie.dataValues.id);
 
         let sum = 0;
         for (const rating of ratings) {
             sum += rating.dataValues.rating;
         }
-        console.log()
+
         movie.dataValues.average_user_ratings = sum / ratings.length;
     }
     catch (err) {
