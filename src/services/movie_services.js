@@ -41,10 +41,19 @@ const getRatingsOfMovie = async (movieId) => {
     }
 }
 
+const getRatings = async () => {
+    try {
+        return await MovieRating.findAll();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     addListOfMovies,
     getAllMovies,
     getMovieWithPk,
-    getRatingsOfMovie
+    getRatingsOfMovie,
+    getRatings
 }
