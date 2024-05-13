@@ -1,9 +1,25 @@
 
 
-post http://localhost:8080/api/auth/login HTTP/1.1
-Content-Type: application/json
+# - /api/auth/signup -
+# post http://localhost:8080/api/auth/signup HTTP/1.1
+# Content-Type: application/json
+# {
+#     "username": "Mahmood",
+#     "password": "12345678"
+# }
 
-{
-    "username": "Mahmood",
-    "password": "12345678"
-}
+
+# - /api/auth/login -
+# post http://localhost:8080/api/auth/login HTTP/1.1
+# Content-Type: application/json
+# {
+#     "username": "Mahmood",
+#     "password": "12345678"
+# }
+
+
+
+# - /api/movies/top-5-movies -
+# get http://localhost:8080/api/movies/top-5-movies HTTP/1.1
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE1NjMxOTE4fQ.A8SuUfRgTe4d9JpwscGJd18foTNZTxHReq7GQi1-jy0
+# Content-Type: application/json
